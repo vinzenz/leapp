@@ -7,24 +7,30 @@ ovirt.DWH:
   - ovirt-engine-dwh-setup
   services:
   - ovirt-engine-dwhd
-  targets_services:
-  - ovirt-engine-dwhd
   users:
   - ovirt
 
 ovirt.Engine:
   require_links:
   - target: postgres.Postgres
+    alias: postgres-container
+  force-host-networking-to:
+    - target: apache.Apache
   requires-host-networking: true
   rpms:
   - ovirt-engine
   - ovirt-engine-webadmin-portal
   services:
   - ovirt-engine
-  targets_services:
-  - ovirt-engine
   users:
   - ovirt
+  actions:
+    fixup:
+      - action: text-replace
+        how: inline
+        what: localhost
+        with: alias:postgres-container
+        where: /etc/ovirt-engine/engine.conf.d/10-setup-database.conf
 
 ovirt.ImageIO:
   config_files:
@@ -34,8 +40,6 @@ ovirt.ImageIO:
   rpms:
   - ovirt-imageio-proxy
   services:
-  - ovirt-imageio-proxy
-  targets_services:
   - ovirt-imageio-proxy
   users:
   - ovirt
@@ -48,8 +52,6 @@ ovirt.WSProxy:
   rpms:
   - ovirt-engine-websocket-proxy
   services:
-  - ovirt-websocket-proxy
-  targets_services:
   - ovirt-websocket-proxy
   users:
   - ovirt

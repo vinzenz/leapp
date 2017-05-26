@@ -12,6 +12,3 @@ apache.Apache:
   - httpd
   services:
   - httpd
-  targets_services:
-  - httpd
-
