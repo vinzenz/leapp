@@ -1,0 +1,11 @@
+postgres.Postgres:
+  config_files:
+  - /var/lib/pgsql/data/postgresql.conf
+  ports:
+  - 5432
+  rpms:
+  - postgresql-server
+  services:
+  - postgresql
+  targets_services:
+  - postgresql

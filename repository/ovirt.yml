@@ -1,0 +1,56 @@
+---
+ovirt.DWH:
+  config_files:
+  - /etc/ovirt-engine-dwh/ovirt-engine-dwhd.conf.d/10-setup-database.conf
+  rpms:
+  - ovirt-engine-dwh
+  - ovirt-engine-dwh-setup
+  services:
+  - ovirt-engine-dwhd
+  targets_services:
+  - ovirt-engine-dwhd
+  users:
+  - ovirt
+
+ovirt.Engine:
+  require_links:
+  - target: postgres.Postgres
+  requires-host-networking: true
+  rpms:
+  - ovirt-engine
+  - ovirt-engine-webadmin-portal
+  services:
+  - ovirt-engine
+  targets_services:
+  - ovirt-engine
+  users:
+  - ovirt
+
+ovirt.ImageIO:
+  config_files:
+  - /etc/ovirt-imageio-proxy/ovirt-imageio-proxy.conf
+  ports:
+  - 54323
+  rpms:
+  - ovirt-imageio-proxy
+  services:
+  - ovirt-imageio-proxy
+  targets_services:
+  - ovirt-imageio-proxy
+  users:
+  - ovirt
+
+ovirt.WSProxy:
+  config_files:
+  - /etc/ovirt-engine/ovirt-websocket-proxy.conf.d/10-setup.conf
+  ports:
+  - 6100
+  rpms:
+  - ovirt-engine-websocket-proxy
+  services:
+  - ovirt-websocket-proxy
+  targets_services:
+  - ovirt-websocket-proxy
+  users:
+  - ovirt
+

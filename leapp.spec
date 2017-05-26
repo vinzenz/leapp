@@ -84,6 +84,7 @@ jq -r '."tool-path" |= "/usr/bin/leapp-tool", ."tool-workdir" |= "/usr/bin", .ve
 %install
 /bin/mkdir -p %{buildroot}/%{_datadir}/cockpit/leapp
 /bin/cp -a cockpit/* %{buildroot}/%{_datadir}/cockpit/leapp/
+/bin/cp -a repository %{buildroot}/%{_datadir}/%{name}/
 
 pushd src
 %py2_install_egg
@@ -96,6 +97,8 @@ popd
 %files -n python2-%{name}
 %doc README.md AUTHORS COPYING
 %{python2_sitelib}/*
+%dir %attr (755,root,root) %{_datadir}/%{name}
+%dir %attr (755,root,root) %{_datadir}/%{name}/repository
 
 %files cockpit
 %doc README.md AUTHORS COPYING
