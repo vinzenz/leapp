@@ -1,5 +1,5 @@
 mysql.MySQL:
-  config_files:
+  config-files:
   - /etc/my.cnf
   ports:
   - 3306
@@ -11,7 +11,7 @@ mysql.MySQL:
 mysql.MySQL55:
   extends:
   - mysql.MySQL
-  config_files:
+  config-files:
   - /opt/rh/mysql55/root/etc/my.cnf
   rpms:
   - mysql55-mysql-server
@@ -21,7 +21,7 @@ mysql.MySQL55:
 mysql.RHMySQL56:
   extends:
   - mysql.MySQL
-  config_files:
+  config-files:
   - /etc/opt/rh/rh-mysql56/my.cnf.d/mysql-server.cnf
   rpms:
   - rh-mysql56-mysql-server
@@ -31,7 +31,7 @@ mysql.RHMySQL56:
 mysql.RHMySQL57:
   extends:
   - mysql.MySQL
-  config_files:
+  config-files:
   - /etc/opt/rh/rh-mysql56/my.cnf.d/mysql-server.cnf
   rpms:
   - rh-mysql57-mysql-server

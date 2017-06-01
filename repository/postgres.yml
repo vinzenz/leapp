@@ -1,5 +1,5 @@
 postgres.Postgres:
-  config_files:
+  config-files:
   - /var/lib/pgsql/data/postgresql.conf
   ports:
   - 5432

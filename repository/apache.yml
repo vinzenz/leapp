@@ -1,6 +1,6 @@
 ---
 apache.Apache:
-  config_files:
+  config-files:
   - /etc/httpd/conf/httpd.conf
   ports:
   - 80

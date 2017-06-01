@@ -1,6 +1,6 @@
 ---
 ovirt.DWH:
-  config_files:
+  config-files:
   - /etc/ovirt-engine-dwh/ovirt-engine-dwhd.conf.d/10-setup-database.conf
   rpms:
   - ovirt-engine-dwh
@@ -11,7 +11,7 @@ ovirt.DWH:
   - ovirt
 
 ovirt.Engine:
-  require_links:
+  require-links:
   - target: postgres.Postgres
     alias: postgres-container
   force-host-networking-to:
@@ -27,13 +27,12 @@ ovirt.Engine:
   actions:
     fixup:
       - action: text-replace
-        how: inline
         what: localhost
-        with: alias:postgres-container
+        with: @postgres-container
         where: /etc/ovirt-engine/engine.conf.d/10-setup-database.conf
 
 ovirt.ImageIO:
-  config_files:
+  config-files:
   - /etc/ovirt-imageio-proxy/ovirt-imageio-proxy.conf
   ports:
   - 54323
@@ -45,7 +44,7 @@ ovirt.ImageIO:
   - ovirt
 
 ovirt.WSProxy:
-  config_files:
+  config-files:
   - /etc/ovirt-engine/ovirt-websocket-proxy.conf.d/10-setup.conf
   ports:
   - 6100
