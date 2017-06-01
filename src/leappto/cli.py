@@ -9,11 +9,6 @@ from subprocess import Popen, PIPE
 from collections import OrderedDict
 from leappto.providers.libvirt_provider import LibvirtMachineProvider
 from leappto.version import __version__
-import leappto.actors.load
-from leappto.actors.meta import registry
-from leappto.actors.meta import registry
-from leappto.actors.meta.resolver import resolve as meta_resolve
-from leappto.actors.meta.resolver import dependency_ordered as meta_dependency_ordered
 from leappto.drivers.ssh import SSHDriver, SSHVagrantDriver
 import os
 import sys
