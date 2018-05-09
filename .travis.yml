@@ -7,12 +7,10 @@ services:
 matrix:
   include:
     - python: "2.7"
-    - python: "2.7"
       env: CONTAINER=centos:7
       services:
         - docker
       sudo: required
-    - python: "3.6"
     
 install:
   - make install-test
