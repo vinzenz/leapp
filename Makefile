@@ -11,9 +11,14 @@ install:
 	install -dm 0755 ${LIBDIR}
 	python -c "import sqlite3; sqlite3.connect('${LIBDIR}/audit.db').executescript(open('res/audit-layout.sql', 'r').read())"
 
+install-container-test:
+	echo 'Container install'
 
 install-test:
 	pip install -r requirements-tests.txt
+
+container-test:
+	echo 'Container Test run'
 
 test:
 	py.test --flake8 --cov leapp

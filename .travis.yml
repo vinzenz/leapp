@@ -13,7 +13,10 @@ matrix:
       sudo: required
     
 install:
-  - make install-test
-  - pip install .
+  - [[ -z $CONTAINER ]] || make install-container-test CONTAINER=$CONTAINER
+  - [[ -z $CONTAINER ]] && make install-test
+  - [[ -z $CONTAINER ]] && pip install .
 
-script: make test
+script:
+  - [[ -z $CONTAINER ]] && make test
+  - [[ -z $CONTAINER ]] || make container-test
