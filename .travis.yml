@@ -13,10 +13,10 @@ matrix:
       sudo: required
     
 install:
-  - if [[ $CONTAINER ]]; then make install-container-test CONTAINER=$CONTAINER; fi
-  - if [[ ! $CONTAINER ]]; make install-test; fi
-  - if [[ ! $CONTAINER ]]; && pip install .; fi
+  - if [ -z "$CONTAINER" ]; then make install-container-test CONTAINER=$CONTAINER; fi
+  - if [ ! -z "$CONTAINER" ]; make install-test; fi
+  - if [ ! -z "$CONTAINER" ]; && pip install .; fi
 
 script:
-  - if [[ ! $CONTAINER ]]; then make test; fi
-  - if [[ $CONTAINER ]]; then make container-test; fi
+  - if [ ! -z "$CONTAINER" ]; then make test; fi
+  - if [ -z "$CONTAINER" ]; then make container-test; fi
