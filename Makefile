@@ -13,9 +13,7 @@ install:
 
 install-container-test:
 	docker pull ${CONTAINER}
-	pushd res/docker-tests
-	docker build -t leapp-tests -f Dockerfile .
-	popd
+	docker build -t leapp-tests -f res/docker-tests/Dockerfile res/docker-tests
 
 install-test:
 	pip install -r requirements-tests.txt
