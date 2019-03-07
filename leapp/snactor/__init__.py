@@ -4,9 +4,10 @@ import socket
 
 from leapp.utils.i18n import _  # noqa; pylint: disable=redefined-builtin
 from leapp.snactor import commands
-from leapp.snactor.commands import workflow
+from leapp.snactor.commands import dashboard
 from leapp.snactor.commands import messages
 from leapp.snactor.commands import repo
+from leapp.snactor.commands import workflow
 from leapp.utils.clicmd import command, command_opt
 from leapp.utils.repository import find_repository_basedir
 from leapp import VERSION
@@ -23,6 +24,7 @@ def load_commands():
     cli.command.add_sub(messages.messages.command)
     cli.command.add_sub(workflow.workflow.command)
     cli.command.add_sub(repo.repo.command)
+    cli.command.add_sub(dashboard.dashboard.command)
 
 
 def _load_commands_from(path):

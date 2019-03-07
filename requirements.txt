@@ -1,2 +1,4 @@
 six==1.12
 requests
+flask
+jinja2

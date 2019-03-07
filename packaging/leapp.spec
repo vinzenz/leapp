@@ -109,15 +109,18 @@ Provides: leapp-framework-dependencies = 2
 %if 0%{?rhel} && 0%{?rhel} == 7
 Requires: python-six
 Requires: python-setuptools
+Requires: python-flask
 Requires: python-jinja2
 %else
 %if %{with python3}
 Requires: python3-six
 Requires: python3-setuptools
+Requires: python3-flask
 Requires: python3-jinja2
 %else # with python2
 Requires: python2-six
 Requires: python2-setuptools
+Requires: python2-flask
 Requires: python2-jinja2
 %endif
 %endif
