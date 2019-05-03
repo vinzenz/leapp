@@ -39,6 +39,10 @@ class WorkflowMeta(type):
         return klass
 
 
+class _ConfigPhase(Phase):
+    name = 'configuration_phase'
+
+
 class Workflow(with_metaclass(WorkflowMeta)):
     """
     Workflow is the base class for all :ref:`workflow <terminology:workflow>` definitions.
@@ -55,6 +59,9 @@ class Workflow(with_metaclass(WorkflowMeta)):
 
     description = ''
     """ Documentation for the workflow """
+
+    configuration = None
+    """ Model to be used as workflow configuration """
 
     @property
     def errors(self):
@@ -77,12 +84,25 @@ class Workflow(with_metaclass(WorkflowMeta)):
         self._experimental_whitelist = set()
         self._auto_reboot = auto_reboot
 
+        if self.configuration:
+            config_actors = [actor for actor in self.tag.actors if self.configuration in actor.produces]
+            if config_actors and len(config_actors) == 1:
+                self._phase_actors.append((
+                    _ConfigPhase,
+                    PhaseActors((), 'Before'),
+                    PhaseActors(tuple(config_actors), 'Main'),
+                    PhaseActors((), 'After')))
+
         for phase in self.phases:
             phase.filter.tags += (self.tag,)
             self._phase_actors.append((
                 phase,
+                # filters all actors with the give tags
+                # phasetag .Before
                 self._apply_phase(phase.filter.get_before(), 'Before'),
+                # phasetag
                 self._apply_phase(phase.filter.get(), 'Main'),
+                # phasetag .After
                 self._apply_phase(phase.filter.get_after(), 'After')))
 
     def _apply_phase(self, actors, stage):
