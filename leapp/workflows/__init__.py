@@ -197,7 +197,7 @@ class Workflow(with_metaclass(WorkflowMeta)):
         needle_actor = (until_actor or '').lower()
 
         self._errors = get_errors(context)
-        config_model = (type(self).configuration,) if type(self).configuration else ()
+        config_model = type(self).configuration
 
         for phase in self._phase_actors:
             os.environ['LEAPP_CURRENT_PHASE'] = phase[0].name
@@ -222,10 +222,10 @@ class Workflow(with_metaclass(WorkflowMeta)):
                             continue
                     current_logger.info("Executing actor {actor} {designation}".format(designation=designation,
                                                                                        actor=actor.name))
-                    messaging = InProcessMessaging()
-                    messaging.load(actor.consumes + config_model)
+                    messaging = InProcessMessaging(config_model=config_model)
+                    messaging.load(actor.consumes)
                     instance = actor(logger=current_logger, messaging=messaging,
-                                     config_model=config_model[0] if config_model else None)
+                                     config_model=config_model)
                     instance.run()
 
                     # Collect errors
