@@ -84,12 +84,21 @@ class Actor(object):
             'dialogs': [d.serialize() for d in self.dialogs],
         }
 
-    def __init__(self, messaging=None, logger=None):
+    def __init__(self, messaging=None, logger=None, config_model=None):
+        self.configuration = None
+        """
+        Instance a workflow defined configuration model if available. This depends on the definition of such a
+        configuration model being defined by the workflow and an actor that provides such a message.
+        """
+
         Actor.current_instance = self
         install_translation_for_actor(type(self))
         self._messaging = messaging
         self.log = (logger or logging.getLogger('leapp.actors')).getChild(self.name)
         """ A configured logger instance for the current actor. """
+
+        if config_model:
+            self.configuration = next(self.consume(config_model), None)
 
     def request_answers(self, dialog):
         """
